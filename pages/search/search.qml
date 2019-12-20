@@ -17,6 +17,9 @@
                         <view class="likes">{{item.comments}}评论</view>
                     </view>
                 </view>
+                <view class="card-img">
+                    <image style="width: 258rpx;height: 150rpx;" src="https://fmjs-1300735296.cos.ap-chengdu.myqcloud.com/img/{{item.title}}.jpg"></image>
+                </view>
             </view>
         </view>
         <view class="bottom" hidden="true">

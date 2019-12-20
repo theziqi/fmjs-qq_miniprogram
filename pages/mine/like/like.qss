@@ -1,0 +1,58 @@
+.like {
+    background-color: #fefefe;
+    margin-top: 16rpx;
+}
+.like:last-child {
+    margin-bottom: 30rpx;
+}
+.title {
+    font-family: "Source Han Sans CN";
+    font-size: 44rpx;
+    color: #272727;
+}
+.year {
+    font-size: 26rpx;
+    color: #707070;
+}
+.content {
+    font-size: 28rpx;
+    color: #3f3f3f;
+}
+.other {
+    font-size: 24rpx;
+    color: #a7a7a7;
+}
+
+.card{
+    background-color: #fefefe;
+    width: 750rpx;
+    height: 276rpx;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 12rpx;
+}
+
+.card-content{
+    position: relative;
+    width: 404rpx;
+}
+
+.card-img{
+    width: 258rpx;
+    height: 150rpx;
+    background-size: 100% 100%;
+    background-image: url('https://fmjs-1300735296.cos.ap-chengdu.myqcloud.com/img/default.jpg');
+}
+
+.likelist {
+    display: flex;
+    font-size: 12px;
+    color: #a7a7a7;
+    margin-top: 15rpx;
+}
+
+.likes {
+    margin-right: 5px;
+}

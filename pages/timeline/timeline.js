@@ -1,12 +1,11 @@
 import * as zrender from '../../lib/zrender/zrender';
 import * as zrhelper from '../../lib/zrender/zrender-helper';
 
-import regeneratorRuntime from '../../utils/runtime.js'
-
 const app = getApp();
-const api = app.globalData.api;
 var zr = [];
 var timer;
+var objM = {};
+var c = 0;
 
 Page({
     data: {
@@ -17,11 +16,120 @@ Page({
         canvasList: [0],
         title: "",
         isAD: false,
-        isLastPage: false,
-        page: 0,
+        t_isLastPage: false,
+        t_page: 0,
         startYear: 40000,
         scrollTop: null,
-        isIOS: false
+        isIOS: false,
+        hideCanvas: false,
+        isEntries: false,
+        sResult: [],
+        showList: [],
+        sValue: "",
+        s_page: 1,
+        s_pageSize: 10,
+        s_isLastPage: false,
+        isInputing: false,
+        isTimeline: true,
+        t_src: "../../static/1-qiehuan-2.png",
+        s_src: "../../static/1-qiehuan-1.png",
+        type: "invention",
+        isInvention: true,
+        inputFocus: false,
+        radarImg: [],
+        isfirst: true,
+        hideCanvas: false,
+        yingdaotu: "../../static/ydt-0.png",
+        ydt: [
+            "https://s2.ax1x.com/2019/12/18/QHqLLV.png",
+            "https://s2.ax1x.com/2019/12/18/QHqbMq.png",
+            "https://s2.ax1x.com/2019/12/18/QHq7zn.png",
+            "https://s2.ax1x.com/2019/12/18/QHqoGj.png",
+            "https://s2.ax1x.com/2019/12/18/QHqTRs.png",
+            "https://s2.ax1x.com/2019/12/18/QHqXZT.png"
+        ]
+    },
+
+    changeYDT: function () {
+        var that = this;
+        if (c == 5) {
+            this.setData({
+                isfirst: false
+            })
+            qq.setStorageSync("isfirst", true)
+        }
+        c++
+        this.setData({
+            yingdaotu: that.data.ydt[c]
+        })
+    },
+
+    /**
+ * 将焦点给到 input（在真机上不能获取input焦点）
+ */
+    tapInput() {
+        this.setData({
+            //在真机上将焦点给input
+            inputFocus: true,
+            hideCanvas: true
+        });
+    },
+
+    /**
+     * input 失去焦点后将 input 的输入内容给到cover-view
+     */
+    blurInput(e) {
+        this.setData({
+            sValue: e.detail.value,
+            hideCanvas: false
+        });
+    },
+
+    handleCanvarToImg() {
+        var that = this;
+        qq.canvasToTempFilePath({
+            x: 0,
+            y: 0,
+            width: qq.getSystemInfoSync().windowWidth,
+            height: 810,
+            canvasId: 'radarCanvas',
+            success: function (res) {
+                that.setData({ radarImg: res.tempFilePath });
+            }
+        });
+    },
+
+
+    changetoInvention: function () {
+        if (this.data.isInvention) return
+
+        this.setData({
+            type: "invention",
+            isInvention: true,
+            startYear: 40000,
+            isAD: false
+        });
+        this.startS();
+        this.upSearch();
+        qq.pageScrollTo({
+            scrollTop: 0
+        });
+    },
+
+    changetoInternet: function () {
+        if (!this.data.isInvention) return
+
+        this.setData({
+            type: "internet",
+            isInvention: false,
+            startYear: 1865,
+            isAD: true
+        });
+        this.startS();
+        this.upSearch();
+        qq.pageScrollTo({
+            scrollTop: 0
+        });
     },
 
     toTop: function () {
@@ -77,32 +185,59 @@ Page({
     },
 
     changetoBC: function (e) {
+        var that = this;
         if (this.data.isAD) {
             wx.showToast({
                 title: '切换年份为公元前',
                 icon: 'success',
                 duration: 2000
             })
+
             this.setData({
                 isAD: false,
-                startYear: 40000
+                startYear: 40000,
+                canvasList: [0],
+                hideCanvas: true
             });
-            this.startS()
+            setTimeout(function () {
+                console.log('doSomething')
+                that.setData({
+                    hideCanvas: false
+                })
+            }, 500);
+            for (var i = 0; i < zr.length; i++) {
+                zr[i].clear();
+            }
+
+            this.startS();
         }
     },
 
     changetoAD: function (e) {
+        var that = this;
         if (!this.data.isAD) {
             wx.showToast({
                 title: '切换年份为公元后',
                 icon: 'success',
                 duration: 2000
             })
+
             this.setData({
                 isAD: true,
-                startYear: 1
+                startYear: 1,
+                canvasList: [0],
+                hideCanvas: true
             });
-            this.startS()
+            setTimeout(function () {
+                console.log('doSomething')
+                that.setData({
+                    hideCanvas: false
+                })
+            }, 500);
+            for (var i = 0; i < zr.length; i++) {
+                zr[i].clear();
+            }
+            this.startS();
         }
     },
 
@@ -113,29 +248,57 @@ Page({
         this.setData(nameMap)
     },
 
+    changeTS: function () {
+        if (this.data.isTimeline) {
+            this.setData({
+                isTimeline: false
+            });
+        } else {
+            this.setData({
+                isTimeline: true
+            });
+        }
+        qq.pageScrollTo({
+            scrollTop: 0
+        });
+    },
+
     onReachBottom: function () {
         var that = this;
-        if (this.data.isLastPage) {
-            return
+        if (that.data.isTimeline) {
+            if (that.data.t_isLastPage) {
+                return
+            }
+            that.setData({
+                t_page: that.data.t_page + 1,
+                canvasList: that.data.canvasList.concat(0)
+            });
+            console.log(that.data.t_page);
+            that.t_getDetails();
+        } else {
+            if (that.data.s_isLastPage) {
+                return
+            }
+            that.setData({ s_page: this.data.s_page + 1 });
+            that.s_getDetails();
         }
-        this.setData({
-            page: that.data.page + 1,
-            canvasList: that.data.canvasList.concat(0)
-        });
-        console.log(that.data.page);
-        this.getDetails();
 
     },
 
-    async drawTitle(y, cx, cy, n) {
-        await this.getTitle(y, cx, cy, n);
-    },
 
-    getTitle(y, nowX, nowY, n) {
-        return new Promise((resolve, reject) => {
-            api.getData('https://qq.timeline.hfzhang.wang/api/getList', {
-                year: y
-            }).then((res) => {
+    drawTitle(y, nowX, nowY, n, i) {
+        var that = this;
+        qq.showLoading({
+            title: "加载中"
+        })
+        qq.request({
+            url: "https://qq-dev.timeline.hfzhang.wang/api/getList",
+            data: {
+                year: y,
+                type: that.data.type
+            },
+            success: function (res) {
+                res = res.data;
                 if (res.list.length > 1) {
                     var xingxing = new zrender.Image({
                         style: {
@@ -144,15 +307,16 @@ Page({
                             y: nowY - 10,
                             width: 20,
                             height: 20
-                        },
-                        draggable: true
+                        }
+
                     });
 
                     xingxing.on('mousedown', function (e) {
                         console.log("单击了星星");
+
                         var obj = JSON.stringify(res.list);
                         qq.navigateTo({
-                            url: '../search/search?list=' + obj,
+                            url: '../search/search?list=' + obj + '&type=' + that.data.type,
                             success: function (res) { console.log("跳转成功") },
                             fail: function (res) { },
                             complete: function (res) { },
@@ -160,6 +324,42 @@ Page({
                     });
 
                     zr[n].add(xingxing);
+                    if (y < 0) {
+                        var jiantou = new zrender.Image({
+                            style: {
+                                image: "../../static/1-jiantou.png",
+                                x: nowX + 165,
+                                y: nowY - 7,
+                                width: 20,
+                                height: 16.5
+                            }
+
+                        });
+                    } else {
+                        var jiantou = new zrender.Image({
+                            style: {
+                                image: "../../static/1-jiantou.png",
+                                x: nowX + 85,
+                                y: nowY - 7,
+                                width: 20,
+                                height: 16.5
+                            }
+
+                        });
+                    }
+                    jiantou.on('mousedown', function (e) {
+                        console.log("单击了箭头");
+
+                        var obj = JSON.stringify(res.list);
+                        qq.navigateTo({
+                            url: '../search/search?list=' + obj + '&type=' + that.data.type,
+                            success: function (res) { console.log("跳转成功") },
+                            fail: function (res) { },
+                            complete: function (res) { },
+                        });
+                    });
+
+                    zr[n].add(jiantou);
 
                     var text_year = new zrender.Text({
                         style: {
@@ -168,14 +368,14 @@ Page({
                             fontSize: 23,
                             textFill: '#fefefe'
                         },
-                        position: [nowX + 25, nowY - 10],
-                        draggable: true
+                        position: [nowX + 25, nowY - 10]
                     });
 
                     text_year.on('mousedown', function (e) {
+
                         var obj = JSON.stringify(res.list);
                         qq.navigateTo({
-                            url: '../search/search?list=' + obj,
+                            url: '../search/search?list=' + obj + '&type=' + that.data.type,
                             success: function (res) { console.log("跳转成功") },
                             fail: function (res) { },
                             complete: function (res) { },
@@ -192,8 +392,7 @@ Page({
                                 fontSize: 18,
                                 textFill: '#fefefe'
                             },
-                            position: [nowX + 105, nowY - 4],
-                            draggable: true
+                            position: [nowX + 115, nowY - 4]
                         });
                     } else {
                         var text_title = new zrender.Text({
@@ -203,14 +402,14 @@ Page({
                                 fontSize: 18,
                                 textFill: '#fefefe'
                             },
-                            position: [nowX + 53, nowY - 4],
-                            draggable: true
+                            position: [nowX + 48, nowY - 4]
+
                         });
                     }
                     text_title.on('mousedown', function (e) {
                         console.log("单击了标题");
                         qq.navigateTo({
-                            url: '../entry/entry?id=' + res.list[0].tpid,
+                            url: '../entry/entry?id=' + res.list[0].tpid + '&type=' + that.data.type,
                             success: function (res) { console.log("跳转成功") },
                             fail: function (res) { },
                             complete: function (res) { },
@@ -227,14 +426,14 @@ Page({
                         },
                         style: {
                             fill: "#fcc200"
-                        },
-                        draggable: true
+                        }
+
                     });
 
                     circle_arc.on('mousedown', function (e) {
                         console.log("单击了标题");
                         qq.navigateTo({
-                            url: '../entry/entry?id=' + res.list[0].tpid,
+                            url: '../entry/entry?id=' + res.list[0].tpid + '&type=' + that.data.type,
                             success: function (res) { console.log("跳转成功") },
                             fail: function (res) { },
                             complete: function (res) { },
@@ -256,7 +455,7 @@ Page({
                     text_year.on('mousedown', function (e) {
                         console.log("单击了标题");
                         qq.navigateTo({
-                            url: '../entry/entry?id=' + res.list[0].tpid,
+                            url: '../entry/entry?id=' + res.list[0].tpid + '&type=' + that.data.type,
                             success: function (res) { console.log("跳转成功") },
                             fail: function (res) { },
                             complete: function (res) { },
@@ -265,13 +464,15 @@ Page({
 
                     zr[n].add(text_year);
                 }
-                resolve();
-            })
-                .catch((err) => {
-                    console.error(err)
-                    reject(err)
-                })
-        })
+                qq.hideLoading()
+            },
+            fail: function (err) {
+                console.log(err)
+            },
+            complete: function () {
+
+            }
+        });
     },
 
     toSearch: function () {
@@ -290,20 +491,31 @@ Page({
         });
     },
 
+    manyList: function (list) {
+        this.setData({
+            isTimeline: false,
+            isEntries: true,
+            sResult: list,
+            showList: []
+        });
+        this.s_getDetails();
+    },
 
-    getDetails() {
+
+    t_getDetails() {
         var that = this;
-        if (that.data.yearList.length - that.data.page * that.data.pointsNum >= that.data.pointsNum) {
-            var showyearList = that.data.yearList.slice(that.data.page * that.data.pointsNum, (that.data.page + 1) * that.data.pointsNum);
+
+        if (that.data.yearList.length - that.data.t_page * that.data.pointsNum >= that.data.pointsNum) {
+            var showyearList = that.data.yearList.slice(that.data.t_page * that.data.pointsNum, (that.data.t_page + 1) * that.data.pointsNum);
             var p = this.data.points;
         } else {
-            var showyearList = that.data.yearList.slice(that.data.page * that.data.pointsNum, that.data.yearList.length - 1);
-            var p = this.data.points.slice(0, that.data.yearList.length - that.data.page * that.data.pointsNum - 1);
+            var showyearList = that.data.yearList.slice(that.data.t_page * that.data.pointsNum, that.data.yearList.length - 1);
+            var p = this.data.points.slice(0, that.data.yearList.length - that.data.t_page * that.data.pointsNum - 1);
             that.setData({
-                isLastPage: true
+                t_isLastPage: true
             });
         }
-        var n = that.data.page;
+        var n = that.data.t_page;
         zr[n] = zrhelper.createZrender('timeline-' + n, 360, 720);
 
         var scale = 0.25;
@@ -328,6 +540,7 @@ Page({
                     last2Y = p[i - 2]["y"]
                     nextX = p[i]["x"]
                     nextY = p[i]["y"]
+
                 } else {
                     last1X = p[i - 1]["x"]
                     last1Y = p[i - 1]["y"]
@@ -370,7 +583,8 @@ Page({
                     .start();
             }
 
-            this.drawTitle(showyearList[i], nowX, nowY, n);
+            this.drawTitle(showyearList[i], nowX, nowY, n, i);
+
 
             console.log(this.data.title);
 
@@ -447,7 +661,7 @@ Page({
             }
 
             if (i != p.length - 1) {
-                this.drawTitle(that.data.yearList[i], nowX, nowY, 0);
+                this.drawTitle(that.data.yearList[i], nowX, nowY, 0, i);
             }
             console.log(this.data.title);
 
@@ -458,7 +672,10 @@ Page({
     startS() {
         var that = this;
         qq.request({
-            url: "https://qq.timeline.hfzhang.wang/api/getYearList",
+            url: "https://qq-dev.timeline.hfzhang.wang/api/getYearList",
+            data: {
+                type: that.data.type
+            },
             success: function (res) {
                 console.log(res.data.year_list);
                 that.setData({
@@ -482,8 +699,8 @@ Page({
                 that.setData({
                     yearList: year_list,
                     canvasList: [0],
-                    page: 0,
-                    isLastPage: false
+                    t_page: 0,
+                    t_isLastPage: false
                 });
                 zr = [];
                 console.log(that.data.yearList);
@@ -503,12 +720,20 @@ Page({
         qq.showShareMenu({
             showShareItems: ['qq', 'qzone', 'wechatFriends', 'wechatMoment']
         });
+
+
+        if (qq.getStorageSync("isfirst")) {
+            this.setData({
+                isfirst: false
+            })
+        }
         console.log(app.globalData.systemInfo.platform)
         if (app.globalData.systemInfo.platform == "ios") {
             that.setData({
                 isIOS: true
             });
         }
+
         let a = [];
         for (var i = 0; i < that.data.pointsNum + 1; i++) {
             a.push({
@@ -522,6 +747,198 @@ Page({
                 console.log(that.data.points)
             }
         };
-        that.startS()
+        that.startS();
+        qq.request({
+            url: "https://qq-dev.timeline.hfzhang.wang/api/search",
+            method: "POST",
+            data: {
+                keyword: that.data.sValue,
+                type: that.data.type
+            },
+            success: function (res) {
+                if (res.data.result.length) {
+                    that.setData({
+                        sResult: res.data.result
+                    });
+                    console.log(that.data.sResult);
+                    that.s_getDetails();
+                } else {
+                    wx.showToast({
+                        title: 'Sorry~还未收录相关信息QAQ',
+                        icon: 'none',
+                        duration: 2000,
+                    })
+
+                }
+
+            },
+            fail: function (err) {
+                console.log(err)
+            }
+        });
+        setTimeout(function () {
+            if (app.globalData.entry) {
+                console.log("kaishitiaozhu")
+                qq.navigateTo({
+                    url: "../entry/entry?id=" + app.globalData.entryid + "&type=" + app.globalData.entrytype
+                });
+            }
+        },1000)
+
     },
+
+    updateValue: function (e) {
+        let name = e.currentTarget.dataset.name;
+        let nameMap = {}
+        nameMap[name] = e.detail && e.detail.value
+        this.setData(nameMap)
+    },
+
+    inputing: function () {
+        this.setData({
+            isInputing: true
+        })
+    },
+
+    uninputed: function () {
+        this.setData({
+            isInputing: false
+        })
+    },
+    onSearch: function () {
+        var that = this;
+        that.setData({
+            isTimeline: false,
+            sResult: [],
+            showList: [],
+            s_page: 1,
+            s_isLastPage: false,
+        });
+        console.log("开始搜索：" + this.data.sValue);
+        qq.request({
+            url: "https://qq-dev.timeline.hfzhang.wang/api/search",
+            method: "POST",
+            data: {
+                keyword: that.data.sValue,
+                type: that.data.type
+            },
+            success: function (res) {
+                if (res.data.result.length) {
+                    that.setData({
+                        sResult: res.data.result
+                    });
+                    console.log(that.data.sResult);
+                    that.s_getDetails();
+                } else {
+                    wx.showToast({
+                        title: 'Sorry~还未收录相关信息QAQ',
+                        icon: 'none',
+                        duration: 2000,
+                    })
+
+                }
+
+            },
+            fail: function (err) {
+                console.log(err)
+            }
+        });
+
+    },
+
+    upSearch: function () {
+        var that = this;
+        that.setData({
+            sResult: [],
+            showList: [],
+            s_page: 1,
+            s_isLastPage: false,
+        });
+        qq.request({
+            url: "https://qq-dev.timeline.hfzhang.wang/api/search",
+            method: "POST",
+            data: {
+                keyword: that.data.sValue,
+                type: that.data.type
+            },
+            success: function (res) {
+                if (res.data.result.length) {
+                    that.setData({
+                        sResult: res.data.result
+                    });
+                    console.log(that.data.sResult);
+                    that.s_getDetails();
+                } else {
+                    wx.showToast({
+                        title: 'Sorry~还未收录相关信息QAQ',
+                        icon: 'none',
+                        duration: 2000,
+                    })
+
+                }
+
+            },
+            fail: function (err) {
+                console.log(err)
+            }
+        });
+
+    },
+
+    toEntry: function (e) {
+        var that = this;
+        console.log(e.currentTarget.dataset.id)
+        qq.navigateTo({
+            url: '../entry/entry?id=' + e.currentTarget.dataset.id + '&type=' + that.data.type,
+            success: function (res) { console.log("跳转成功") },
+            fail: function (res) { },
+            complete: function (res) { },
+        });
+    },
+
+
+    s_getDetails: function () {
+        var that = this;
+        var s;
+        let d = [];
+        var listLength = this.data.sResult.length;
+        var size = this.data.s_pageSize;
+        if (this.data.s_page == listLength / size) {
+            s = this.data.sResult.slice(size * (this.data.s_page - 1), listLength - 1);
+            that.setData({
+                s_isLastPage: true
+            });
+        } else {
+            s = this.data.sResult.slice(size * (this.data.s_page - 1), size * this.data.s_page);
+        }
+        s.forEach(function (item, index) {
+            qq.request({
+                url: 'https://qq-dev.timeline.hfzhang.wang/api/getTP/' + item.tpid,
+                data: { type: that.data.type },
+                success: function (res) {
+                    console.log(res.data);
+                    objM = {
+                        title: res.data.timepoint.title,
+                        show: res.data.timepoint.show.show.replace(/ - /g, ' 至 ').replace(/-/g, '公元前'),
+                        content: (res.data.timepoint.convert_content.length <= 40) ? res.data.timepoint.convert_content : res.data.timepoint.convert_content.slice(0, 39) + "...",
+                        id: item.tpid,
+                        like: res.data.like,
+                        comments: res.data.comment
+                    };
+                    d.push(objM);
+
+                    if (index == 9 || (listLength < 10 && index == listLength - 1)) {
+                        that.setData({
+                            showList: that.data.showList.concat(d)
+                        });
+                        console.log(that.data.showList);
+                    }
+                },
+                fail: function (err) {
+                    console.log(err)
+                }
+            });
+        });
+    }
+
 })

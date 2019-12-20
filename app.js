@@ -4,6 +4,9 @@ const api = require('./api/index');
 App({
   onLaunch: function () {
     // 展示本地存储能力
+    qq.showShareMenu({
+      showShareItems: ['qq', 'qzone', 'wechatFriends', 'wechatMoment']
+    });
     var logs = qq.getStorageSync('logs') || []
     logs.unshift(Date.now())
     qq.setStorageSync('logs', logs)
@@ -35,10 +38,23 @@ App({
       }
     })
   },
+  onShareAppMessage: function (res) {
+    return {
+      path: "/pages/index/index"
+    }
+  },
+  onfinishTask: function(){
+    if(app.globalData.finishTask) return
+    app.globalData.finishTask = true;
+    qq.showToast({
+      title: "已完成今日任务",
+      duration: 2000
+    })
+  },
   globalData: {
     session_key: "",
     userInfo: null,
-    api,
-    systemInfo: null
+    systemInfo: null,
+    finishTask: false
   }
 })

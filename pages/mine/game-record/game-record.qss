@@ -1,0 +1,40 @@
+page {
+    color: #fefefe;
+    background-size: cover;
+    background-image: url("https://fmjs-1300735296.cos.ap-chengdu.myqcloud.com/img/1-beijing-1.jpg");
+}
+
+.gamecontent {
+    background-color: #4d6596;
+
+    font-size: 32rpx;
+    font-family: Source Han Sans CN;
+}
+
+.gameinfo {
+    margin: 0 auto;
+    color: #f9f9f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 400rpx;
+}
+
+.date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32rpx;
+}
+
+.dts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.score {
+    margin: 0 10rpx;
+    font-size: 47rpx;
+    color: #fcc200;
+}

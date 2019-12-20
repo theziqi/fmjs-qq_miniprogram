@@ -6,73 +6,39 @@ Page({
   data: {
     userInfo: {},
     hasUserInfo: false,
-    canIUse: qq.canIUse('button.open-type.getUserInfo')
+    canIUse: qq.canIUse('button.open-type.getUserInfo'),
+    nickname: ""
   },
-  //事件处理函数
-  toTimeline: function () {
-    console.log('toTimeline on.')
-    qq.navigateTo({
-      url: '../timeline/timeline'
-    })
-  },
-  toSearch: function () {
-    qq.navigateTo({
-      url: '../search/search'
-    })
-  },
-  toGame: function () {
-    qq.navigateTo({
-      url: '../game/game'
-    })
-  },
-  onLoad: function () {
+  onLogin: function () {
     var that = this;
-    qq.showShareMenu({
-      showShareItems: ['qq', 'qzone', 'wechatFriends', 'wechatMoment']
-    });
-    if (app.globalData.userInfo) {
-      console.log(app.globalData.userInfo)
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      qq.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
-
     qq.login({
       success(res) {
         if (res.code) {
           // 发起网络请求
           console.log(res.code);
           qq.request({
-            url: 'https://qq.timeline.hfzhang.wang/api/login',
+            url: 'https://qq-dev.timeline.hfzhang.wang/api/login',
             method: 'POST',
             data: {
-              code: res.code
+              code: res.code,
+              nickname: app.globalData.userInfo.nickName
             },
             success: function (res) {
               console.log(res.data);
+              qq.setStorageSync('session_key', res.data.session_key)
               app.globalData.session_key = res.data.session_key;
-              console.log(app.globalData.session_key);
+              console.log(app.globalData);
+              qq.getUserInfo({
+                success: function (res) {
+                  console.log(res.data)
+                  app.globalData.userInfo = res.data;
+                  that.setData({
+                    userInfo: app.globalData.userInfo,
+                    hasUserInfo: true
+                  })
+
+                }
+              });
             }
           });
         } else {
@@ -80,19 +46,105 @@ Page({
         }
       }
     })
-
+  },
+  onLoad: function (options) {
+    var that = this;
     qq.getSystemInfo({
       success: function (res) {
         app.globalData.systemInfo = res;
       }
+    });
+
+    qq.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+
+          qq.checkSession({
+            success() {
+              //session_key 有效
+              app.globalData.session_key = qq.getStorageSync('session_key');
+              console.log(app.globalData.session_key)
+              if (app.globalData.session_key) {
+                qq.getUserInfo({
+                  success: function (res) {
+                    console.log(res.userInfo)
+                    app.globalData.userInfo = res.userInfo;
+                    that.setData({
+                      userInfo: app.globalData.userInfo,
+                      hasUserInfo: true
+                    })
+
+                  }
+                });
+              } else {
+                that.onLogin();
+
+              }
+            },
+            fail() {
+              // session_key 已经失效，需要重新执行登录流程
+              that.onLogin();
+            }
+          })
+
+          
+
+          if (options.entry) {
+            app.globalData.entry = true;
+            app.globalData.entryid = options.id;
+            app.globalData.entrytype = options.type;
+          } 
+
+          setTimeout(function () {
+            qq.switchTab({
+              url: "../timeline/timeline"
+            });
+          }, 1500);
+        } else {
+          qq.switchTab({
+            url: "../mine/mine"
+          });
+          qq.showToast({
+            title: "请授权登录",
+            icon: "none",
+            duration: 2000
+          })
+        }
+      }
     })
+
+
+
+    /**qq.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+
+        } else {
+          qq.switchTab({
+            url: "../mine/mine"
+          });
+          qq.showToast({
+            title: "请登录",
+            icon: "none",
+            duration: 2000
+          })
+        }
+      }
+    })**/
+
+
+
+
   },
+
   getUserInfo: function (e) {
     console.log(e.detail.userInfo)
     app.globalData.userInfo = e.detail.userInfo
+    console.log(app.globalData.userInfo)
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+    this.onLogin();
   }
 })

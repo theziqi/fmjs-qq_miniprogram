@@ -1,25 +1,6 @@
-import regeneratorRuntime from '../../utils/runtime.js'
-
 const app = getApp()
 
 var objM = {};
-
-const getData = (url, param) => {
-    return new Promise((resolve, reject) => {
-        qq.request({
-            url: url,
-            method: 'GET',
-            data: param,
-            success(res) {
-                console.log(res)
-                resolve(res.data)
-            },
-            fail(err) {
-                reject(err)
-            }
-        })
-    })
-}
 
 Page({
     data: {
@@ -30,7 +11,8 @@ Page({
         page: 1,
         pageSize: 10,
         isLastPage: false,
-        isInputing: false
+        isInputing: false,
+        type: ""
     },
 
     updateValue: function (e) {
@@ -61,10 +43,11 @@ Page({
         });
         console.log("开始搜索：" + this.data.sValue);
         qq.request({
-            url: "https://qq.timeline.hfzhang.wang/api/search",
+            url: "https://qq-dev.timeline.hfzhang.wang/api/search",
             method: "POST",
             data: {
-                keyword: that.data.sValue
+                keyword: that.data.sValue,
+                type: that.data.type
             },
             success: function (res) {
                 if (res.data.result.length) {
@@ -91,8 +74,10 @@ Page({
     },
 
     toEntry: function (e) {
+        console.log(e.currentTarget.dataset.id)
+        var that = this;
         qq.navigateTo({
-            url: '../entry/entry?id=' + e.currentTarget.dataset.id,
+            url: '../entry/entry?id=' + e.currentTarget.dataset.id + "&type=" + that.data.type,
             success: function (res) { console.log("跳转成功") },
             fail: function (res) { },
             complete: function (res) { },
@@ -107,7 +92,7 @@ Page({
         this.getDetails();
     },
 
-    getDetails: function (tp) {
+    getDetails: function () {
         var that = this;
         var s;
         let d = [];
@@ -122,47 +107,33 @@ Page({
             s = this.data.sResult.slice(size * (this.data.page - 1), size * this.data.page);
         }
         s.forEach(function (item, index) {
-            if (tp) {
-                var id = item.tpid;
-            } else {
-                var id = item.id;
-            }
-            getData('https://qq.timeline.hfzhang.wang/api/getTP/' + id, {}).then((res) => {
-                qq.request({
-                    url: "https://qq.timeline.hfzhang.wang/api/getCount/" + id,
-                    success: function (res1) {
-                        qq.request({
-                            url: "https://qq.timeline.hfzhang.wang/api/getComment/" + id,
-                            success: function (res2) {
-                                console.log(res2.data.comments)
-                                objM = {
-                                    title: res.timepoint.title,
-                                    show: typeof res.timepoint.show.show == "string" ? res.timepoint.show.show.replace(/ - /g, ' 至 ').replace(/-/g, '公元前') : res.timepoint.show.show,
-                                    content: (res.timepoint.content.length <= 40) ? res.timepoint.content : res.timepoint.content.slice(0, 39) + "...",
-                                    id: id,
-                                    like: res1.data.like,
-                                    comments: res2.data.comments.length
-                                };
-                                d.push(objM);
-                                if (index == 9 || (listLength < 10 && index == listLength - 1)) {
-                                    that.setData({
-                                        showList: that.data.showList.concat(d)
-                                    });
-                                    console.log(d);
-                                }
-
-                            },
-                            fail: function (err) {
-                                console.log(err)
-                            }
-                        })
-
-                    },
-                    fail: function (err) {
-                        console.log(err)
+            qq.request({
+                url: 'https://qq-dev.timeline.hfzhang.wang/api/getTP/' + item.tpid,
+                data: { type: that.data.type },
+                success: function (res) {
+                    console.log(res.data);
+                    objM = {
+                        title: res.data.timepoint.title,
+                        show: res.data.timepoint.show.show.replace(/ - /g, ' 至 ').replace(/-/g, '公元前'),
+                        content: (res.data.timepoint.convert_content.length <= 25) ? res.data.timepoint.convert_content : res.data.timepoint.convert_content.slice(0, 24) + "...",
+                        id: item.tpid,
+                        like: res.data.like,
+                        comments: res.data.comment
+                    };
+                    d.push(objM);
+                    if (index == 9 || (listLength < 10 && index == listLength - 1)) {
+                        that.setData({
+                            showList: that.data.showList.concat(d)
+                        });
+                        console.log(d);
                     }
-                })
-
+                },
+                fail: function (err) {
+                    console.log(err)
+                },
+                complete: function () {
+                    qq.hideLoading()
+                }
             });
         });
     },
@@ -176,18 +147,28 @@ Page({
             console.log(list)
             this.setData({
                 isEntries: true,
-                sResult: list
+                sResult: list,
+                type: options.type
             });
-            var tp = true;
-            this.getDetails(tp);
+            qq.showLoading({
+                title: "加载中"
+            })
+            this.getDetails();
+
         } else if (options.s) {
             console.log(options)
             console.log("传入搜索值：" + options.s)
             this.setData({
                 sValue: options.s
             });
+            qq.showLoading({
+                title: "加载中"
+            })
             this.onSearch();
         } else {
+            qq.showLoading({
+                title: "加载中"
+            })
             this.onSearch();
         }
     }

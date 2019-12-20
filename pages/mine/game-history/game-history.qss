@@ -1,0 +1,77 @@
+page {
+    color: #fefefe;
+    background-size: cover;
+    background-image: url("https://fmjs-1300735296.cos.ap-chengdu.myqcloud.com/img/1-beijing-1.jpg");
+}
+.review {
+    margin: 80rpx auto;
+    width: 678rpx;
+}
+
+.t4 {
+    text-align: center;
+    color: #ffeedf;
+    font-family: AliHYAiHei;
+    font-size: 56rpx;
+    line-height: 136rpx;
+}
+
+.reqh {
+    height: 155rpx;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.reqhN {
+    font-family: Source Han Sans CN;
+    font-size: 36rpx;
+    color: 36rpx;
+}
+
+.reqhD {
+    height: 107rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.reqhDD {
+    width: 320rpx;
+    display: flex;
+    justify-content: space-between;
+}
+
+.reqhD1 {
+    font-family: AliHYAiHei;
+    font-size: 30rpx;
+    color: #fefefe;
+    line-height: 38rpx;
+}
+
+.reqhD2 {
+    font-family: Source Han Sans CN;
+    font-size: 30rpx;
+    color: #fcc200;
+    line-height: 38rpx;
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border: 20rpx solid #000;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: #fcc200;
+    border-right-color: transparent;
+}
+
+.r_triangle {
+    width: 0;
+    height: 0;
+    border: 20rpx solid #000;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-right-color: #fcc200;
+}

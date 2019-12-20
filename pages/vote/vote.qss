@@ -1,0 +1,71 @@
+page{
+	background-color: white;
+}
+.date{
+	height: 66rpx;
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	padding-right: 42rpx;
+	margin-top: 24rpx;
+	margin-bottom: 34rpx;
+}
+.year-month{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	color: #707070;
+	font-size: 32rpx;
+}
+.day{
+	font-size: 74rpx;
+	color: #272727;
+	margin-left: 11rpx;
+}
+.swiper-wrapper{
+	height: 1010rpx !important;
+}
+.swiper-item{
+	width: 528rpx;
+	height: 900rpx;
+	border-radius: 10rpx;
+	box-shadow: 0 0 20rpx rgba(0, 0, 0, 0.16);
+}
+.unuse{
+	background-color: grey;
+	opacity: 0.5 !important; 
+}
+.card-header{
+	height: 430rpx;
+	text-align: center;
+	background-color: #965151;
+	border-radius: 10rpx;
+}
+.card-content{
+	height: 412rpx;
+	padding: 28rpx;
+}
+.card-content .question{
+	font-size: 36rpx;
+	color: #272727;
+	line-height: 61rpx;
+}
+
+.opts .opt{
+	width: 100%;
+	text-align: center;
+	height: 60rpx;
+	background-color: #f9f9f9;
+	color: #2d4068;
+	font-family: Source Han Sans CN;
+	font-size: 30rpx;
+	margin: 15rpx auto;
+	border: 1px solid #707070;
+	border-radius: 7rpx;
+}
+
+.card-bottom{
+	display: flex;
+	justify-content: center;
+}

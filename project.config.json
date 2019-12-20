@@ -8,7 +8,7 @@
 		"newFeature": true,
 		"autoAudits": true,
 		"remoteDebugLogEnable": false,
-		"uploadWithSourceMap": true,
+		"uploadWithSourceMap": false,
 		"nodeModules": true,
 		"uglifyFileName": true
 	},
@@ -22,7 +22,7 @@
 		"hidedInDevtools": []
 	},
 	"qqappid": "1110004748",
-	"projectname": "fmjs",
+	"projectname": "fmjs_x",
 	"scripts": {
 		"beforeCompile": "",
 		"beforePreview": "",
@@ -39,12 +39,47 @@
 			"list": []
 		},
 		"game": {
-			"currentL": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"gamePlugin": {
 			"list": []
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": -1,
+					"name": "未登录",
+					"pathName": "pages/login/login",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "游戏启动",
+					"pathName": "pages/game_load/game_load",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "每日投票",
+					"pathName": "pages/vote/vote",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/mine/mine",
+					"query": "",
+					"scene": ""
+				}
+			]
 		}
 	}
 }

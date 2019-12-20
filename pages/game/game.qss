@@ -1,3 +1,26 @@
+.scale-up {
+    animation-name: scale-up;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+}
+
+@keyframes scale-up {
+    0% {
+        opacity: 0;
+        transform: scale(0.75);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+button {
+    margin: 0;
+    padding: 0;
+}
+
 .gameTop {
     display: flex;
     width: 622rpx;
@@ -14,7 +37,7 @@
 .gameRule {
     width: 408rpx;
     margin: 0 auto;
-    margin-top: 71rpx;
+    margin-top: 33rpx;
     line-height: 25px;
     font-family: Source Han Sans CN;
     font-size: 24rpx;
@@ -24,16 +47,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 42rpx auto;
     background-color: #fcc200;
-    width: 354rpx;
-    height: 120rpx;
-    font-size: 56rpx;
+    width: 200rpx;
+    height: 100rpx;
+    font-size: 45rpx;
     font-family: AliHYAiHei;
     border-radius: 10rpx;
+    color: #fefefe;
 }
 
-.daojishi{
+.daojishi {
     background-color: #f7eedc;
     border: 2px solid #fcc200;
     border-radius: 50%;
@@ -47,7 +70,7 @@
     color: #e36767;
 }
 
-.daojishi_c{
+.daojishi_c {
     background-color: #f7eedc;
     border: 2px solid #fcc200;
     border-radius: 50%;
@@ -61,12 +84,12 @@
     color: red;
 }
 
-.gameShow{
+.gameShow {
     width: 622rpx;
     margin: 88rpx auto;
 }
 
-.selectAnswer{
+.selectAnswer {
     background-color: #fefefe;
     border: 1px solid #fcc200;
     border-radius: 10rpx;
@@ -78,61 +101,65 @@
     text-align: center;
 }
 
-.trueBox{
+.trueBox {
     background-color: #fcc200;
 }
 
-.falseBox{
+.falseBox {
     background-color: #606060;
 }
 
-.selectTitle{
+.selectTitle {
     height: 175rpx;
     display: flex;
     align-items: flex-end;
     justify-content: center;
+    line-height: 53rpx;
 }
 
-.selectTitle_c{
+.selectTitle_c {
     color: white;
 }
 
-.selectYear{
+.selectYear {
     height: 112rpx;
     font-size: 50rpx;
     margin-top: 78rpx;
+    line-height: 74rpx;
 }
 
-.selectTip{
+.selectTip {
     padding-right: 22rpx;
-    margin-top: 23rpx;
+    margin-top: 15rpx;
     float: right;
 }
 
-.showResult{
+.showResult {
     width: 576rpx;
     margin: 0 auto;
 }
 
-.t1{
+.t1 {
     font-family: Source Han Sans CN;
     font-size: 44rpx;
     color: #ffeedf;
 }
 
-.wt{
+.wt {
     font-family: AliHYAiHei;
     font-size: 72rpx;
     color: #fcc200;
 }
 
-.t2{
+.t2 {
     font-family: Source Han Sans CN;
     font-size: 32rpx;
     color: #fefefe;
+    float: right;
 }
 
-.ranking{
+.ranking {
+    margin: 0 auto;
     width: 200rpx;
     height: 200rpx;
     border: 5px solid #ffeedf;
@@ -140,46 +167,41 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    float: right;
 }
 
-.recBtn{
-    padding: 0;
-    width: 272rpx;
-    height: 92rpx;
+.recBtn {
+    width: 165rpx;
     background-color: #fefefe;
     color: #2d4068;
     font-family: AliHYAiHei;
-    font-size: 48rpx;
-    line-height: 96rpx;
+    font-size: 36rpx;
 }
 
-.shareBtn{
-    padding: 0;
-    width: 272rpx;
-    height: 92rpx;
+.shareBtn {
+    width: 165rpx;
     background-color: #fcc200;
     color: #fefefe;
     font-family: AliHYAiHei;
-    font-size: 48rpx;
-    line-height: 96rpx;
+    font-size: 36rpx;
 }
 
-.t3{
+.t3 {
+    text-align: center;
     margin-top: 130rpx;
+    margin-bottom: 80rpx;
     font-size: 28rpx;
     font-family: Source Han Sans CN;
     color: #fefefe;
 }
 
-.searchTips{
+.searchTips {
     width: 576rpx;
     font-size: 44rpx;
     font-family: "AliHYAiHei";
     color: #ffeedf;
 }
 
-.searchBar{
+.searchBar {
     margin-top: 20rpx;
     display: flex;
     justify-content: center;
@@ -193,5 +215,91 @@
 page {
     color: #fefefe;
     background-size: cover;
-    background-image: url("https://s2.ax1x.com/2019/11/24/MOxRnf.jpg");
+    background-image: url("https://fmjs-1300735296.cos.ap-chengdu.myqcloud.com/img/1-beijing-1.jpg");
+}
+
+.review {
+    margin: 0 auto;
+    width: 678rpx;
+}
+
+.t4 {
+    text-align: center;
+    color: #ffeedf;
+    font-family: AliHYAiHei;
+    font-size: 56rpx;
+    line-height: 136rpx;
+}
+
+.reqh {
+    height: 155rpx;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.reqhN {
+    font-family: Source Han Sans CN;
+    font-size: 36rpx;
+    color: 36rpx;
+}
+
+.reqhD {
+    height: 107rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.reqhDD {
+    width: 320rpx;
+    display: flex;
+    justify-content: space-between;
+}
+
+.reqhD1 {
+    font-family: AliHYAiHei;
+    font-size: 30rpx;
+    color: #fefefe;
+    line-height: 38rpx;
+}
+
+.reqhD2 {
+    font-family: Source Han Sans CN;
+    font-size: 30rpx;
+    color: #fcc200;
+    line-height: 38rpx;
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border: 20rpx solid #000;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: #fcc200;
+    border-right-color: transparent;
+}
+
+.r_triangle {
+    width: 0;
+    height: 0;
+    border: 20rpx solid #000;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-right-color: #fcc200;
+}
+
+.t5 {
+    margin-top: 130rpx;
+    font-size: 28rpx;
+    font-family: Source Han Sans CN;
+    color: #fefefe;
+}
+
+.shareCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
 }

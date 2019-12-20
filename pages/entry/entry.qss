@@ -7,12 +7,63 @@ page {
     justify-content: space-between;
 }
 
-.content {
+.imgTop {
+    width: 750rpx;
+    height: 640rpx;
+    background-size: 100% 100%;
+    background-image: url("https://fmjs-1300735296.cos.ap-chengdu.myqcloud.com/img/default.jpg");
+}
+
+.e_content {
     width: 622rpx;
     margin-top: 72rpx;
     margin-bottom: 91rpx;
 }
 
+.v_content {
+    width: 675rpx;
+}
+
+.v_content .title {
+    font-family: AliHYAiHei;
+    font-size: 48rpx;
+    color: #3f3f3f;
+    line-height: 64rpx;
+    margin: 66rpx auto;
+}
+.opts {
+    margin-bottom: 40rpx;
+}
+.opts .opt {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60rpx;
+    width: 512rpx;
+    background-color: #f9f9f9;
+    color: #2d4068;
+    font-family: Source Han Sans CN;
+    font-size: 30rpx;
+    margin: 15rpx auto;
+    border: 1px solid #707070;
+    border-radius: 7rpx;
+}
+.opts .opt_s {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60rpx;
+    width: 512rpx;
+    background-color: #ffeedf;
+    color: #2d4068;
+    font-family: Source Han Sans CN;
+    font-size: 30rpx;
+    margin: 15rpx auto;
+    border: 1px solid #707070;
+    border-radius: 7rpx;
+}
 .container {
     display: flex;
     justify-content: center;
@@ -47,6 +98,8 @@ page {
 
 .commentContent {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-family: Source Han Sans CN;
     font-size: 30rpx;
     color: #535353;
@@ -55,9 +108,17 @@ page {
     padding: 22rpx 0;
 }
 
+.delete {
+    margin: 0;
+    padding: 0;
+    background: none;
+    font-family: Source Han Sans CN;
+    font-size: 30rpx;
+    line-height: 30rpx;
+}
+
 .nickname {
     font-weight: bold;
-    margin-right: 8rpx;
 }
 
 .sendComment {
@@ -87,12 +148,12 @@ page {
 .sCbtn {
     margin-left: 6rpx;
     font-family: Source Han Sans CN;
-    width: 118rpx;
+    width: 110rpx;
     height: 64rpx;
     background-color: #2d4068;
     border-radius: 32rpx;
     color: #fefefe;
-    font-size: 30rpx;
+    font-size: 23rpx;
     margin: 0;
     line-height: 64rpx;
 }

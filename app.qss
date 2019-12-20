@@ -1,14 +1,14 @@
-@import "colorui/main.wxss";
-@import "colorui/icon.wxss";
-
+@import "colorui/main.qss";
+@import "colorui/icon.qss";
+@import "colorui/animation.qss";
 @font-face {
   font-family: "AliHYAiHei";
-  src: url("https://xcx-1252787552.cos.ap-chengdu.myqcloud.com/font/aliHanyi.ttf");
+  src: url("https://fmjs-1300735296.cos.ap-chengdu.myqcloud.com/font/aliHanyi.ttf");
 }
 
 @font-face {
   font-family: "Source Han Sans CN";
-  src: url("https://xcx-1252787552.cos.ap-chengdu.myqcloud.com/font/SourceHanSansCN-Regular.otf");
+  src: url("https://fmjs-1300735296.cos.ap-chengdu.myqcloud.com/font/SourceHanSansCN-Regular.otf");
 }
 
 .container {
@@ -24,3 +24,9 @@
   height: 100%;
   z-index: 0;
 }
+
+
+.button-hover{
+  opacity: 0.5 !important; 
+}
+

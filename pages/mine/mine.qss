@@ -1,0 +1,206 @@
+.header {
+    height: 338rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header .bgpic {
+    position: absolute;
+    width: 750rpx;
+    height: 315rpx;
+}
+.header .gravatar {
+    z-index: 2;
+    width: 180rpx;
+    height: 180rpx;
+    background-color: white;
+    border-radius: 50%;
+    margin-left: 37rpx;
+}
+.header .userinfo {
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 180rpx;
+    padding-left: 17rpx;
+}
+.userinfo .nickname {
+    font-family: AliHYAiHei;
+    font-size: 40rpx;
+    line-height: 53rpx;
+    color: #272727;
+}
+.userinfo .level {
+    font-family: Source Han Sans CN;
+    font-size: 30rpx;
+    line-height: 41rpx;
+    color: #a7a7a7;
+}
+.points {
+    font-family: Source Han Sans CN;
+    font-size: 24rpx;
+    line-height: 41rpx;
+    color: #a7a7a7;
+}
+.siginbox {
+	width: 180rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.points {
+    display: flex;
+    position: relative;
+}
+.header .calendar {
+    z-index: 2;
+    margin-right: 37rpx;
+    width: 86rpx;
+    height: 86rpx;
+}
+.item-list {
+    padding-top: 18rpx;
+    background-color: #f5f5f5;
+}
+.item {
+    height: 77rpx;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    font-family: "Source Han Sans CN";
+    font-size: 34rpx;
+    color: #707070;
+}
+.item:last-child .desc {
+    border: none;
+}
+.item .icon {
+    width: 48rpx;
+    height: 43rpx;
+    text-align: center;
+    margin-left: 23rpx;
+    margin-right: 34rpx;
+}
+.item .desc {
+    height: 77rpx;
+    line-height: 77rpx;
+    border-bottom: 1px dashed #707070;
+    flex: 1;
+}
+.swiper-wrapper {
+    padding-top: 32rpx;
+    background-color: #f5f5f5;
+}
+.swiper-wrapper .desc {
+    height: 66rpx;
+    line-height: 66rpx;
+    background-color: white;
+    padding: 0 28rpx;
+    font-family: "Source Han Sans CN";
+    font-size: 36rpx;
+    color: #272727;
+}
+.swiper-wrapper .left-img {
+    width: 40rpx;
+    height: 40rpx;
+    position: absolute;
+    top: 50%;
+    left: 16rpx;
+    transform: translateY(-50%);
+}
+.swiper-wrapper .right-img {
+    width: 40rpx;
+    height: 40rpx;
+    position: absolute;
+    top: 50%;
+    right: 16rpx;
+    transform: translateY(-50%);
+}
+
+/* 模态框 积分规则说明 */
+.rule {
+    width: 623rpx;
+    height: 988rpx;
+    background-color: #ffeedf;
+}
+
+.signin {
+    position: fixed;
+    top: 171px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 448rpx;
+    height: 270rpx;
+    background-color: #2d4068;
+    color: #fcc200;
+    font-family: AliHYAiHei;
+    font-size: 42rpx;
+    text-align: center;
+    line-height: 270rpx;
+    transition: width, height ease-in-out 0.3s;
+    z-index: 10;
+}
+
+.activity {
+    width: 485rpx;
+    height: 755rpx;
+    background-color: #ffeedf;
+}
+
+.hidden {
+    display: none;
+}
+.tucao {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: left;
+}
+
+.signin-title {
+    margin: 0 auto;
+    width: 416rpx;
+    font-family: Source Han Sans CN;
+    font-size: 32rpx;
+    line-height: 40rpx;
+}
+
+.signin-form {
+    margin-top: 55rpx;
+}
+
+.form-line {
+    margin: 25rpx auto;
+    display: flex;
+    justify-content: space-between;
+    width: 410rpx;
+}
+
+.form-line .line-title {
+    font-family: AliHYAiHei;
+    font-size: 36rpx;
+}
+
+.form-line .line-input {
+    width: 298rpx;
+    height: 43rpx;
+    border: 1px solid #fcc200;
+    background-color: white;
+}
+
+.line-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 70rpx auto;
+    width: 271rpx;
+    height: 92rpx;
+    font-family: AliHYAiHei;
+    font-size: 48rpx;
+    line-height: 64rpx;
+    background-color: #fcc200;
+    color: white;
+}
+.close {
+}

@@ -3,7 +3,7 @@
     margin-top: 97rpx;
     width: 576rpx;
     font-size: 44rpx;
-    font-family: "AliHYAiHei";
+    font-family: AliHYAiHei;
     color: #ffeedf;
 }
 
@@ -31,15 +31,21 @@
     height: 276rpx;
     position: relative;
     display: flex;
-    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
-    justify-content: center;
     margin-top: 12rpx;
 }
 
 .card-content{
     position: relative;
-    width: 638rpx;
+    width: 404rpx;
+}
+
+.card-img{
+    width: 258rpx;
+    height: 150rpx;
+    background-size: 100% 100%;
+    background-image: url('https://fmjs-1300735296.cos.ap-chengdu.myqcloud.com/img/default.jpg');
 }
 
 .likelist{
@@ -55,7 +61,7 @@
 
 page{
     background-size: cover;
-    background-image: url("https://s2.ax1x.com/2019/11/24/MOxanK.jpg");
+    background-image: url("https://fmjs-1300735296.cos.ap-chengdu.myqcloud.com/img/1-beijing-1.jpg");
 }
 
 .bottom{

@@ -32,12 +32,13 @@
 }
 
 .ictn {
-  width: 750rpx;
-  height: 518rpx;
+  margin: 100rpx auto;
+  width: 425rpx;
+  height: 425rpx;
   margin-bottom: 120rpx;
 }
 
 page{
-  background-image: url("https://s2.ax1x.com/2019/11/24/MOxWB8.jpg");
+  background-image: url("https://fmjs-1300735296.cos.ap-chengdu.myqcloud.com/img/0-beijing-1.jpg");
   background-size: cover;
 }

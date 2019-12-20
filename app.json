@@ -4,12 +4,56 @@
     "pages/timeline/timeline",
     "pages/search/search",
     "pages/entry/entry",
-    "pages/game/game"
+    "pages/game/game",
+    "pages/login/login",
+    "pages/game_load/game_load",
+    "pages/mine/mine",
+    "pages/vote/vote",
+    "pages/mine/game-record/game-record",
+    "pages/mine/game-history/game-history",
+    "pages/mine/contribution/contribution",
+    "pages/mine/like/like"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "发明简史",
     "navigationBarTextStyle": "black"
-  }
+  },
+  "tabBar": {
+    "color": "#535353",
+    "selectedColor": "#fcc200",
+    "borderStyle": "black",
+    "backgroundColor": "#fefefe",
+    "list": [
+      {
+        "selectedIconPath": "static/1-tanxunjianshi-2.png",
+        "iconPath": "static/1-tanxunjianshi-1.png",
+        "pagePath": "pages/timeline/timeline",
+        "text": "探寻简史"
+      },
+      {
+        "selectedIconPath": "static/1-xiaoyouxi-2.png",
+        "iconPath": "static/1-xiaoyouxi-1.png",
+        "pagePath": "pages/game_load/game_load",
+        "text": "小游戏"
+      },
+      {
+        "selectedIconPath": "static/1-meiritoupiao-2.png",
+        "iconPath": "static/1-meiritoupiao-1.png",
+        "pagePath": "pages/vote/vote",
+        "text": "每日投票"
+      },
+      {
+        "selectedIconPath": "static/1-wode-2.png",
+        "iconPath": "static/1-wode-1.png",
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
+  },
+  "groupIdList": [
+    "939429189",
+    "934488187"
+  ]
 }
