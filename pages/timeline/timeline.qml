@@ -18,7 +18,7 @@
                 </view>
 
             <view class="canvasList" qq:for="{{canvasList}}" qq:for-index="key" qq:for-item="item" hidden="{{hideCanvas}}">
-                <canvas canvas-id="timeline-{{key}}" class="t-canvas" bindtap="ctap" data-id="{{key}}" wx:if="{{!radarImg[key]}}"></canvas>
+                <canvas canvas-id="timeline-{{key}}" class="t-canvas" bindtouchstart="ctap" data-id="{{key}}" wx:if="{{!radarImg[key]}}"></canvas>
                 <image wx:else src="{{radarImg[key]}}" style="width: 260px; height: 180px;" />
             </view>
         </view>

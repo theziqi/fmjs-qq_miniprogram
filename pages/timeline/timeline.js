@@ -1,3 +1,4 @@
+//采用了canvas框架——wezrender
 import * as zrender from '../../lib/zrender/zrender';
 import * as zrhelper from '../../lib/zrender/zrender-helper';
 
@@ -310,7 +311,7 @@ Page({
                         }
 
                     });
-
+                    //利用框架的事件绑定函数，绑定mousedown事件到指定的图形对象中，执行相应的跳转功能
                     xingxing.on('mousedown', function (e) {
                         console.log("单击了星星");
 
@@ -347,6 +348,7 @@ Page({
 
                         });
                     }
+                    //利用框架的事件绑定函数，绑定mousedown事件到指定的图形对象中，执行相应的跳转功能
                     jiantou.on('mousedown', function (e) {
                         console.log("单击了箭头");
 
@@ -360,7 +362,7 @@ Page({
                     });
 
                     zr[n].add(jiantou);
-
+                    //利用框架的事件绑定函数，绑定mousedown事件到指定的图形对象中，执行相应的跳转功能
                     var text_year = new zrender.Text({
                         style: {
                             text: y < 0 ? '公元前' + (-y) : y,
@@ -370,7 +372,7 @@ Page({
                         },
                         position: [nowX + 25, nowY - 10]
                     });
-
+                    //利用框架的事件绑定函数，绑定mousedown事件到指定的图形对象中，执行相应的跳转功能
                     text_year.on('mousedown', function (e) {
 
                         var obj = JSON.stringify(res.list);
@@ -406,6 +408,7 @@ Page({
 
                         });
                     }
+                    //利用框架的事件绑定函数，绑定mousedown事件到指定的图形对象中，执行相应的跳转功能
                     text_title.on('mousedown', function (e) {
                         console.log("单击了标题");
                         qq.navigateTo({
@@ -429,7 +432,7 @@ Page({
                         }
 
                     });
-
+                    //利用框架的事件绑定函数，绑定mousedown事件到指定的图形对象中，执行相应的跳转功能
                     circle_arc.on('mousedown', function (e) {
                         console.log("单击了标题");
                         qq.navigateTo({
@@ -451,7 +454,7 @@ Page({
                         },
                         position: [nowX + 13, nowY]
                     });
-
+                    //利用框架的事件绑定函数，绑定mousedown事件到指定的图形对象中，执行相应的跳转功能
                     text_year.on('mousedown', function (e) {
                         console.log("单击了标题");
                         qq.navigateTo({
@@ -485,6 +488,7 @@ Page({
         console.log(e);
         let touch = e.touches[0];
         let id = e.target.dataset.id;
+        //绑定触摸开始事件到指定的canvas当中
         zr[id].handler.dispatch('mousedown', {
             zrX: touch.x,
             zrY: touch.y
